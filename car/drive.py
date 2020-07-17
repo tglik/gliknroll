@@ -2,6 +2,7 @@
 import time
 import sys
 from gpiozero import Motor, OutputDevice, PhaseEnableMotor
+from car.constants import CAMERA_FOV_X, WHEELS_ROT_RANGE, MAX_SPEED
 
 import RPi.GPIO as GPIO
 
@@ -78,6 +79,12 @@ class DriveImpl(object):
             self.drive_motor.backward(abs(speed))
         else:
             self.drive_motor.stop()
+
+    def chase_obj(self, direction, distance):
+        dir = direction * CAMERA_FOV_X / WHEELS_ROT_RANGE
+        spd = min(distance / MAX_SPEED, 1.0)
+        self.set_dir(dir)
+        self.set_speed(spd)
 
 Drive = DriveImpl()
 
