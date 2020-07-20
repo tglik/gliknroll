@@ -1,4 +1,5 @@
-from picamera import PiCamera, PiRGBArray
+from picamera import PiCamera
+from picamera.array import PiRGBArray
 from datetime import datetime
 from threading import Timer
 from os import path 
@@ -14,8 +15,7 @@ class CameraImpl(object):
         self.camera.resolution = RESOLUTION
         self.camera.framerate = 15
 
-        self.rawCapture = PiRGBArray(camera, size=RESOLUTION)
-
+        self.rawCapture = PiRGBArray(self.camera, size=RESOLUTION)
 
         self.outdir = "/tmp"
 
